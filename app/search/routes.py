@@ -33,7 +33,7 @@ def follow(username):
         return redirect(url_for('search_bp.search'))
     Follow.add_follow(current_user.username, followed.username)
     flash(f'You have requested to follow {followed.username}', 'success')
-    return redirect(url_for('user_bp.profile', username=followed.username))
+    return redirect(url_for('search_bp.profile'))
 
 @search_bp.route('/accept_follow/<follower>', methods=['POST'])
 @login_required
