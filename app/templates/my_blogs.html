@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -14,4 +14,18 @@
             {% endfor %}
         </ul>
     </body>
-</html>
+</html> -->
+
+{% extends "base.html" %}
+{% block title %}My_Blogs{% endblock %}
+
+{% block content %}
+
+        <h1>My Blog Posts</h1>
+        <!-- <a href="{{url_for('submit_bp.submit')}}">Submit a new post</a> -->
+        <ul>
+            {% for post in posts %}
+                <li>{{post.title}}</li>
+            {% endfor %}
+        </ul>
+{% endblock %}

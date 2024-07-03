@@ -23,7 +23,7 @@ bcrypt = Bcrypt(app)
 
 # Initialize Flask-Login
 login_manager = LoginManager(app)
-login_manager.login_view = 'auth.login'
+login_manager.login_view = 'auth_bp.login'
 
 
 # Register blueprints
@@ -32,10 +32,14 @@ from app.submit.routes import submit_bp
 from app.timeline.routes import timeline_bp
 from app.auth.routes import auth_bp
 
+from app.search.routes import search_bp
+from app.user.routes import user_bp
+
 app.register_blueprint(home_bp)
 app.register_blueprint(submit_bp)
 app.register_blueprint(timeline_bp)
 app.register_blueprint(auth_bp)
-
+app.register_blueprint(search_bp)
+app.register_blueprint(user_bp)
 # Ensure models and forms are imported
 # from app import models, forms

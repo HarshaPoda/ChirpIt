@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Search Users{% endblock %}
+
+{% block content %}
+    <h1>Search Users</h1>
+    <form method="POST">
+        <input type="text" name="search" placeholder="Enter username">
+        <button type="submit">Search</button>
+    </form>
+{% endblock %}

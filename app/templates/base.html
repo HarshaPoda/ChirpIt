@@ -119,12 +119,17 @@
                     <li><a href="{{ url_for('timeline_bp.timeline') }}">Timeline</a></li>
                     <li><a href="{{ url_for('home_bp.my_blogs') }}">My Blogs</a></li>
                     <li><a href="{{ url_for('submit_bp.submit') }}">Submit Blog</a></li>
+                    
                     {% if current_user.is_authenticated %}
                         <li><a href="{{ url_for('auth_bp.logout') }}">Logout</a></li>
+                        <li><a href="{{ url_for('user_bp.profile', username=current_user.username)}}">Profile</button></li>
+                        <li><a href="{{ url_for('search_bp.search') }}">Search Users</a></li>
                     {% else %}
                         <li><a href="{{ url_for('auth_bp.login') }}">Login</a></li>
                         <li><a href="{{ url_for('auth_bp.signup') }}">Sign Up</a></li>
                     {% endif %}
+                    
+
                 </ul>
             </nav>
         </div>

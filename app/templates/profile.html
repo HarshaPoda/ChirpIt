@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }}'s Profile{% endblock %}
+
+{% block content %}
+    <h1>{{ user.username }}</h1>
+    <p>{{ user.email }}</p>
+    <!-- {% if not is_following %}
+        <form method="POST" action="{{ url_for('search_bp.follow', username=user.username) }}">
+            <button type="submit">Follow</button>
+        </form>
+    {% else %} 
+        <p>You are following this user.</p>
+    {% endif %} -->
+    <h2>Followers</h2>
+    <ul>
+        {% for follower in followers %}
+            <li>
+                <a href="{{ url_for('user_bp.profile', username=follower.follower) }}">{{ follower.follower }}</a>
+                {% if follower.status == 'pending' %}
+                    <form method="POST" action="{{ url_for('search_bp.accept_follow', follower=follower.follower) }}" style="display:inline;">
+                        <button type="submit">Accept</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <h2>Following</h2>
+    <ul>
+        {% for follow in following %}
+            <li>
+                <a href="{{ url_for('user_bp.profile', username=follow.followed) }}">{{ follow.followed }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
