@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %} - ChirpIt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            background-color: #f6f6f6;
+            padding-top: 60px;  /* Height of the banner */
+        }
+
+        header {
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 0px 0;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 500;
+        }
+
+        .banner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px;
+        }
+
+        .container {
+            width: 60%;
+            max-width: 800px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+            height: calc(100vh - 80px);  /* Adjust for banner and padding */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .blog-posts {
+            width: 100%;
+        }
+
+        .blog-post {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            width: 100%;
+        }
+
+        .blog-post h2 {
+            margin-top: 0;
+        }
+
+        .blog-post p {
+            margin: 10px 0;
+        }
+
+        .blog-post .username {
+            font-style: italic;
+            color: #555;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .header a {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="banner">
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home_bp.home') }}">Home</a></li>
+                    <li><a href="{{ url_for('timeline_bp.timeline') }}">Timeline</a></li>
+                    <li><a href="{{ url_for('home_bp.my_blogs') }}">My Blogs</a></li>
+                    <li><a href="{{ url_for('submit_bp.submit') }}">Submit Blog</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('auth_bp.logout') }}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('auth_bp.login') }}">Login</a></li>
+                        <li><a href="{{ url_for('auth_bp.signup') }}">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+Flask
+Flask-Bcrypt
+Flask-Login
+Flask-WTF
+boto3
+python-dotenv
+email_validator

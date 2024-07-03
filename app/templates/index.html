@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+        <h1>Welcome to Chirpit</h1>
+        <button onclick="window.location.href='/timeline'">View Timeline</button>
+        {% if current_user.is_authenticated %}
+            <p>Welcome, {{current_user.username}}!</p>
+        {% else %}
+            <p>Welcome to ChirpIt - where everyone has a story</p>
+        {% endif %}
+{% endblock %}

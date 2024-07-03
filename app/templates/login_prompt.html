@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ title }} - Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f6f6f6;
+        }
+
+        .container {
+            width: 60%;
+            max-width: 800px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login Required</h1>
+        <p>You must be logged in to submit a blog post.</p>
+        <a href="{{ url_for('auth_bp.login') }}">Login</a>
+        <a href="{{ url_for('auth_bp.signup') }}">Sign Up</a>
+    </div>
+</body>
+</html>

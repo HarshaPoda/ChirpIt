@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Blog Posts{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/timeline.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="blog-posts">
+        {% for blog in blogs %}
+            <div class="blog-post">
+                <h2>{{ blog.title }}</h2>
+                <p class="username">by {{ blog.username }}</p>
+                <p>{{ blog.content }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
