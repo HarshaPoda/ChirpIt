@@ -1,2 +1,2 @@
 # ChirpIt
-This is the initial repo for ChirpIt - A blogging site
+This is the initial repo for ChirpIt - A blogging site re-envisioned
