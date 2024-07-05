@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import uuid
 import boto3
 from boto3.dynamodb.conditions import Key
@@ -73,20 +73,30 @@ def add_blog_post_comment(post_id, comment):
     comment_id = str(uuid.uuid4())
     created_at = datetime.utcnow().isoformat()
     dynamodb = get_dynamodb_client()
-    table = dynamodb.Table('Comments')
-    table.put_item(Item={
+    comments_table = dynamodb.Table('Comments')
+    comments_table.put_item(Item={
         'comment_id': comment_id,
         'post_id': post_id,
         'username': comment.username,
         'content': comment.content,
         'created_at': created_at
     })
+    dynamodb = get_dynamodb_client()
     blogposts_table = dynamodb.Table('BlogPosts')
-    blogposts_table.update_item(
-        Key={'post_id': post_id},
-        UpdateExpression='SET comments = list_append(comments, :c)',
-        ExpressionAttributeValues={':c': [comment_id]}
-    )
+    # Fetch the existing comments list
+    response = blogposts_table.get_item(Key={'post_id': post_id})
+    existing_comments = response['Item'].get('comments', [])
+    
+    # Add new comment ID to the comments list if not already present
+    if comment_id not in existing_comments:
+        existing_comments.append(comment_id)
+        blogposts_table.update_item(
+            Key={'post_id': post_id},
+            UpdateExpression='SET comments = :c',
+            ExpressionAttributeValues={':c': existing_comments},
+            ConditionExpression='attribute_exists(post_id)'
+        )
+
 
 def get_comments_for_post(post_id):
     dynamodb = get_dynamodb_client()
@@ -96,3 +106,21 @@ def get_comments_for_post(post_id):
         KeyConditionExpression=boto3.dynamodb.conditions.Key('post_id').eq(post_id)
     )
     return response.get('Items', [])
+
+# def add_user_like(username, post_id):
+#     dynamodb = get_dynamodb_client()
+#     table = dynamodb.Table('Likes')
+#     table.put_item(Item={'username': username, 'post_id': post_id})
+#     update_blog_post_likes(post_id)
+
+def user_has_liked_post(username, post_id):
+    dynamodb = get_dynamodb_client()
+    table = dynamodb.Table('Likes')
+    response = table.get_item(Key={'username': username, 'post_id': post_id})
+    return 'Item' in response
+
+def add_user_like(username, post_id):
+    dynamodb = get_dynamodb_client()
+    table = dynamodb.Table('Likes')
+    table.put_item(Item={'username': username, 'post_id': post_id})
+    update_blog_post_likes(post_id)
