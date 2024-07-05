@@ -4,13 +4,20 @@ from app.models.user import User, Follow
 
 user_bp = Blueprint('user_bp', __name__)
 
-@user_bp.route('/user/<username>')
+@user_bp.route('/profile/<username>')
 @login_required
 def profile(username):
-    user = User.get_user_by_username(username)
+    user = User.find_by_username(username)
     if not user:
         return render_template('404.html'), 404
-    followers = Follow.get_followers(username)
-    following = Follow.get_following(username)
-    is_following = any(f['followed'] == username for f in Follow.get_following(current_user.username))
-    return render_template('profile.html', user=user, followers=followers, following = following, is_following=is_following)
+
+    followers = user.get_followers()
+    following = user.get_following()
+    analytics = {
+        'views' : 'To-Do',
+        'posts' : 'To-DO'
+        #'views': user.get_view_count(),
+        #'posts': len(user.get_posts())
+        # Add more analytics data as needed
+    }
+    return render_template('profile.html', user=user, followers=followers, following=following, analytics=analytics)

@@ -124,3 +124,21 @@ def add_user_like(username, post_id):
     table = dynamodb.Table('Likes')
     table.put_item(Item={'username': username, 'post_id': post_id})
     update_blog_post_likes(post_id)
+
+
+def get_user_followers(username):
+    dynamodb = get_dynamodb_client()
+    table = dynamodb.Table('Follows')
+    response = table.query(
+        IndexName='followed-index',
+        KeyConditionExpression=boto3.dynamodb.conditions.Key('followed').eq(username)
+    )
+    return [item['follower'] for item in response.get('Items', [])]
+
+def get_user_following(username):
+    dynamodb = get_dynamodb_client()
+    table = dynamodb.Table('Follows')
+    response = table.query(
+        KeyConditionExpression=boto3.dynamodb.conditions.Key('follower').eq(username)
+    )
+    return [item['followed'] for item in response.get('Items', [])]

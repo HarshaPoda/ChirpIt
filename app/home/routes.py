@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
 from flask_login import login_required, current_user
+from analytics.recommendations import get_recommended_blogs
 from app.models.blogpost import BlogPost, Comment 
 import uuid
 
@@ -14,7 +15,8 @@ def home():
 @login_required
 def my_blogs():
     posts = BlogPost.get_posts_by_user(current_user.username)
-    return render_template('my_blogs.html', title='My Blogs', posts=posts)
+    recommended_blogs = get_recommended_blogs(current_user.username)
+    return render_template('my_blogs.html', title='My Blogs', posts=posts, recommended_blogs=recommended_blogs)
 
 ########################################################################
 

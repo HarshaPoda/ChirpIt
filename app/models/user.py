@@ -1,6 +1,7 @@
 from flask_login import UserMixin
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
+from app.aws.dynamodb_utils import get_user_followers, get_user_following
 from app import bcrypt
 from app.aws.dynamodb_utils import get_dynamodb_client, create_user
 
@@ -43,6 +44,13 @@ class User(UserMixin):
     
     def get_id(self):
         return self.username
+    
+    def get_followers(self):
+        return get_user_followers(self.username)
+
+    def get_following(self):
+        return get_user_following(self.username)
+
     
     @staticmethod
     def get_user_by_username(username):
@@ -104,3 +112,11 @@ class Follow:
             print(f"Successfully updated follow request from {follower} to {followed}")
         except Exception as e:
             print(f"Error updating follow request: {e}")
+
+    def get_view_count(self):
+        # Implement the logic to get the number of views for the user's profile
+        pass
+
+    def get_posts(self):
+        # Implement the logic to get the list of posts by the user
+        pass

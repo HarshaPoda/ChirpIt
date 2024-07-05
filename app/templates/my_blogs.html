@@ -1,18 +1,16 @@
 {% extends "base.html" %}
-{% block title %}My_Blogs{% endblock %}
+{% block title %}My Blogs{% endblock %}
 
 {% block content %}
-
-        <h1>My Blog Posts</h1>
-        <!-- <a href="{{url_for('submit_bp.submit')}}">Submit a new post</a> -->
-        <ul>
-            {% for blog in posts %}
-            <div class="blog-post">
-                <h2><a href="{{ url_for('home_bp.view_blog', post_id=blog.post_id) }}">{{ blog.title }}</a></h2>
-                <p>{{ blog.content[:100] }}...</p>
-                <p>By {{ blog.username }} | {{ blog.created_at }}</p>
-                <p>Likes: {{ blog.likes }} | Comments: {{ blog.comments|length }}</p>
-            </div>
-            {% endfor %}
-        </ul>
+    <h1>My Blog Posts</h1>
+    <ul>
+        {% for blog in posts %}
+        <div class="blog-post">
+            <h2><a href="{{ url_for('home_bp.view_blog', post_id=blog.post_id) }}">{{ blog.title }}</a></h2>
+            <p>{{ blog.content[:100] }}...</p>
+            <p>By {{ blog.username }} | {{ blog.created_at }}</p>
+            <p>Likes: {{ blog.likes }} | Comments: {{ blog.comments|length }}</p>
+        </div>
+        {% endfor %}
+    </ul>
 {% endblock %}
