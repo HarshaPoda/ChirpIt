@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Blog Posts{% endblock %}
+{% block title %}Timeline{% endblock %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/timeline.css') }}">
@@ -10,9 +10,10 @@
     <div class="blog-posts">
         {% for blog in blogs %}
             <div class="blog-post">
-                <h2>{{ blog.title }}</h2>
+                <h2><a href="{{ url_for('home_bp.view_blog', post_id=blog.post_id) }}">{{ blog.title }}</a></h2>
                 <p class="username">by {{ blog.username }}</p>
-                <p>{{ blog.content }}</p>
+                <p>{{ blog.content[:100] }}...</p>
+                <p>Likes: {{ blog.likes }} | Comments: {{ blog.comments|length }}</p>
             </div>
         {% endfor %}
     </div>

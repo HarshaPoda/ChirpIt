@@ -25,7 +25,12 @@
         <!-- <a href="{{url_for('submit_bp.submit')}}">Submit a new post</a> -->
         <ul>
             {% for post in posts %}
-                <li>{{post.title}}</li>
+            <div class="blog-post">
+                <h2><a href="{{ url_for('home_bp.view_blog', post_id=blog.post_id) }}">{{ blog.title }}</a></h2>
+                <p>{{ blog.content[:100] }}...</p>
+                <p>By {{ blog.username }} | {{ blog.created_at }}</p>
+                <p>Likes: {{ blog.likes }} | Comments: {{ blog.comments|length }}</p>
+            </div>
             {% endfor %}
         </ul>
 {% endblock %}
